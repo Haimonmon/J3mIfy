@@ -59,7 +59,6 @@
     "ny0": "ninyo",
     "t4u": "tayo",
     "kmi": "kami",
-    "snila": "sila",
     "k0": "ko",
     "m3": "me",
     "ur": "your",
@@ -74,27 +73,24 @@
     "tulog aq": "matutulog ako",
     "h3ad 0ut": "alis na",
     "p4s0k": "pasok",
-    "ml l4r0": "maglaro ng ML",
     "t3xt": "text",
-    "g0": "pumunta",
-    "w8": "maghintay",
+    "w8": "wait",
     "d n4": "hindi na",
     "b0ngg4": "bongga",
     "l8r": "mamaya",
-    "n0w n4": "ngayon na",
+    "n0w n4": "now na",
     "s0brang": "sobrang",
     "evr": "ever",
     "m0mshie": "mom",
     "skul": "school",
     "bahai": "bahay",
-    "j0b": "trabaho",
     "claz": "class",
     "fr3nd": "kaibigan",
     "ku2ya": "kuya",
     "at3": "ate",
     "c0rn": "corn",
     "b4by": "baby",
-    "p3t": "alagang hayop",
+    "p3t": "pet",
     "g4l": "babae",
     "b0ypr3n": "boyfriend",
     "g3rlpr3n": "girlfriend",
@@ -104,18 +100,30 @@
     "w3ird0": "weirdo",
     "pr3tty": "pretty",
     "b4ng3r": "banger",
-    "h0t": "mainit / sexy"
+    "h0t": "mainit"
   },
   "fallback_rules": {
     "substitutions": {
       "4": "a",
       "3": "e",
-      "1": "i",
+      "1": "l",
       "0": "o",
       "z": "s",
-      "x": "s"
+      "x": "s",
+      "q": "k",
+      "!": "i"
     },
     "remove_repeated_letters": true,
-    "strip_trailing": ["z", "x"]
+    "strip_trailing": ["z", "x", "h"],
+    "custom_substitutions": [
+    {
+      "pattern": "x{2,}",
+      "replace": "haha"
+    },
+    {
+      "pattern": "h{2,}",
+      "replace": ""
+    }
+  ]
   }
 }
