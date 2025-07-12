@@ -32,6 +32,46 @@ def levenshtein(keyword1: str, keyword2: str) -> int:
     return dp[len1][len2]
 
 
+def fuzzy_matching(keyword1: str, keyword2: str) -> float:
+    """ Compares the similiraties between the two words given by levenshtein """
+    distance = levenshtein(keyword1=keyword1, keyword2=keyword2)
+    score = 1 - (distance / max(len(keyword1), len(keyword2)))
+    return round(score, 2)
+
+
+def jaccard_similarity(a: str, b: str) -> float:
+    """ Compares the similiraties between the two words given by levenshtein"""
+    set_a = set(a)
+    set_b = set(b)
+    intersection = set_a & set_b
+    union = set_a | set_b
+    return len(intersection) / len(union)
+
+
+def hybrid_score(a: str, b: str) -> float:
+    """ Both jaccard and levenshtein based distancing or scoring """
+    lev = fuzzy_matching(a, b)
+    jac = jaccard_similarity(a, b)
+    return round((lev + jac) / 2, 2)
+
+
+def best_match(word: str, choices: List["str"], threshhold: float = 0.55) -> str:
+    """ identifies whats the best match on the given word with the given list of choices with possible matches """
+    if word in choices:
+        return word
+
+    best_match = None
+    best_score = -1
+
+    for option in choices:
+        score = hybrid_score(word, option)
+        if score > best_score:
+            best_match = option
+            best_score = score
+ 
+    return best_match if best_score >= threshhold else None
+
+
 if __name__ == "__main__":  
     # ! DISCLAIMER: Nahanp kolang sa internet 💀👌✨
     word = "😜😛🥰Anong masarap na KAPE@ edi KAPEling ka samahan mopa ng DECAF DECAFapakawalan mamahalin kita i love my life because my life is you🤪😘😂🤣" 
