@@ -103,16 +103,6 @@
     "h0t": "mainit"
   },
   "fallback_rules": {
-    "substitutions": {
-      "4": "a",
-      "3": "e",
-      "1": "l",
-      "0": "o",
-      "z": "s",
-      "x": "s",
-      "q": "k",
-      "!": "i"
-    },
     "remove_repeated_letters": true,
     "strip_trailing": ["z", "x", "h"],
     "custom_substitutions": [
