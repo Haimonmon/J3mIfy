@@ -6,7 +6,9 @@ def main():
 
     sentence2: str = "muuzt4hH gudnyt" # ! Still need a fixing on these to fix this sentence
 
-    jeje.jejenized(jeje_sentence = sentence2)
+    sentence3: str = "m4ta9al na 4kon9 j3j3mon 3h jajajajajajajaja"
+
+    jeje.jejenized(jeje_sentence = sentence3)
 
 if __name__ == "__main__":
     main()
