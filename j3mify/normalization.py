@@ -1,7 +1,7 @@
 from typing import Dict, List, Set
 
 from .file import load_file, load_txt_file
-from .correction import re, tokenization, levenshtein, best_match
+from .correction import re, tokenization, split_jejemon,  best_match
 
 data: Dict = load_file(file_name="jejemon.json")
 
@@ -13,29 +13,8 @@ substitutes: Dict[str, Dict[str, List[str]]] = load_file(file_name="character.js
 normal_words: List[str] = load_txt_file(file_name="words.txt")
 
 
-
-
 def is_punctuation(char: str) -> bool:
      pass
-
-
-def replace_character(word:str, index: int, replacement: str) -> None:
-    """ Replace a character on string at a specific index """
-    word_characters: List[str] = list(word)
-    word_characters[index] = replacement
-    return "".join(word_characters)
-
-
-def tokenize_jeje_letters(word: str, variants: List[str]) -> List[str]:
-    """ Splits every known jejemon alphabets """  
-    # * Sort the list by length to Longest to shortest
-    sorted_variants: List[str] = sorted(variants, key = len, reverse = True)
-    
-    avoid_specials: List[str] = [re.escape(word.lower()) for word in sorted_variants]
-
-    pattern: str = '|'.join(avoid_specials)
-
-    return re.findall(pattern, word.lower())
 
 
 def replace_variants(word: str, normal: str, detected_variants: List[str]) -> str:
@@ -53,13 +32,13 @@ def normalize_characters(word: str) -> str:
     common_substitute_match: Dict = {}
 
     for normal, variants in substitutes.items():
-            detected_jeje_char: List[str] = tokenize_jeje_letters(word = word.lower(), variants = variants)
+            detected_jeje_char: List[str] = split_jejemon(word = word.lower(), variants = variants)
 
             if detected_jeje_char:
                 replacement: str = word
                 i = 0
                 while i < len(variants):
-                    detected_jeje_char = tokenize_jeje_letters(word = replacement, variants = variants)
+                    detected_jeje_char = split_jejemon(word = replacement, variants = variants)
 
                     if not detected_jeje_char or i == len(variants) - 1:
                         word = replacement
@@ -67,21 +46,11 @@ def normalize_characters(word: str) -> str:
 
                     variant: str = variants[i]
 
-                    # print(word, "-> ", variants, "- ", variant)
-                    # print("Current Word: ", word)
-                    # print("Current variant: ", variant)
-                    # print("Current variants lists: ", variants)
-            
                     replacement = replace_variants(word = replacement, normal = normal, detected_variants = detected_jeje_char)
 
-                    # print("Replacement:", replacement)
-                    # print("Detected jejemon Characters:", detected_jeje_char)
-                    # print()
                     i += 1
                 
                     # common_substitute_match[normal] = best_match(word = word, choices = normal_words)
-
-    # print(common_substitute_match)
     return word
 
 
