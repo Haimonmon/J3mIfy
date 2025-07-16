@@ -8,6 +8,19 @@ def tokenization(sentence: str) -> List[str]:
     return pattern.findall(sentence)
 
 
+def split_jejemon(word: str, variants: List[str]) -> List[str]:
+    """ Splits every known jejemon alphabets """
+    # * Sort the list by length to Longest to shortest
+    sorted_variants: List[str] = sorted(variants, key=len, reverse=True)
+
+    avoid_specials: List[str] = [
+        re.escape(word.lower()) for word in sorted_variants]
+
+    pattern: str = '|'.join(avoid_specials)
+
+    return re.findall(pattern, word.lower())
+
+
 def levenshtein(keyword1: str, keyword2: str) -> int:
     """ A function that scales the misspelled words wrongness. """
     len1 = len(keyword1)
@@ -71,7 +84,7 @@ def best_match(word: str, choices: List["str"], threshold: float = 0.55) -> str:
             best_score = score
 
     if best_score > threshold:
-        return matches
+        return matches, best_score
 
     return word
 
@@ -81,8 +94,8 @@ if __name__ == "__main__":
     word = "😜😛🥰Anong masarap na KAPE@ edi KAPEling ka samahan mopa ng DECAF DECAFapakawalan mamahalin kita i love my life because my life is you🤪😘😂🤣" 
 
     matches = best_match(
-        word = "mwsta",
-        choices = ["musta"]
+        word = "misyu",
+        choices = ["miss you"]
     )
 
     print(matches)
