@@ -1,6 +1,6 @@
 from typing import Dict, List, Set
 
-from .file import load_file
+from .file import load_file, load_txt_file
 from .correction import re, tokenization, levenshtein, best_match
 
 data: Dict = load_file(file_name="jejemon.json")
@@ -9,22 +9,14 @@ strip_trailing = data["fallback_rules"]["strip_trailing"]
 remove_repeats = data["fallback_rules"]["remove_repeated_letters"]
 custom_subs = data["fallback_rules"]["custom_substitutions"]
 
-def fallback_pattern(word: str) -> str:
-    """  Checks possible patterns """
-    word = word.lower()
+substitutes: Dict[str, Dict[str, List[str]]] = load_file(file_name="character.json")["jejemon_alphabet"]
+normal_words: List[str] = load_txt_file(file_name="words.txt")
 
-    for sub in custom_subs:
-        word = re.sub(sub["pattern"], sub["replace"], word)
 
-    # Remove long repeated letters
-    if remove_repeats:
-        word = re.sub(r'(.)\1{2,}', r'\1', word)
 
-    word: str = normalize_characters(word)
 
-    word = re.sub(rf"[{''.join(strip_trailing)}]+$", "", word)
-
-    return word
+def is_punctuation(char: str) -> bool:
+     pass
 
 
 def replace_character(word:str, index: int, replacement: str) -> None:
@@ -46,62 +38,98 @@ def tokenize_jeje_letters(word: str, variants: List[str]) -> List[str]:
     return re.findall(pattern, word.lower())
 
 
-def normalize_characters(word: str) -> str:
-    """ Change each character into normal ones """
-    substitutes: Dict[str, Dict[str, List[str]]] = load_file(file_name="character.json")["jejemon_alphabet"]
-
-    # * Will be using this using scoring
-    common_substitute_match: Dict = {}
-
-    word_letters_index: int = 0
-    while word_letters_index < len(word):
-        current_word_letter: str = word[word_letters_index]
-
-        for normal , variants in substitutes.items():
-            for variant in variants:
-                if current_word_letter == variant:
-                    word = replace_character(word = word, index = word_letters_index, replacement = normal)
-
-     
-        word_letters_index += 1
-    
-    print(common_substitute_match)
+def replace_variants(word: str, normal: str, detected_variants: List[str]) -> str:
+    for variant in detected_variants:
+        if variant in word:
+            word = word.replace(variant, normal, 1)
     return word
 
 
-def normalization(tokenized: List[str]):
-    """ Convert the word listed on array into normal word """
-    jejemon_dict = {k.lower(): v.lower() for k, v in data["dictionary"].items()}
+def normalize_characters(word: str) -> str:
+    """ Change each character into normal ones """
+    # * Will be using this using scoring
+    word = word.lower()
 
-    normalized = []
+    common_substitute_match: Dict = {}
 
-    for word in tokenized:
-        cleaned = word.lower()
-        if cleaned in jejemon_dict:
-            normalized.append(jejemon_dict[cleaned])
-        else:
-            normalized.append(fallback_pattern(cleaned))
-    return " ".join(normalized)
+    for normal, variants in substitutes.items():
+            detected_jeje_char: List[str] = tokenize_jeje_letters(word = word.lower(), variants = variants)
+
+            if detected_jeje_char:
+                replacement: str = word
+                i = 0
+                while i < len(variants):
+                    detected_jeje_char = tokenize_jeje_letters(word = replacement, variants = variants)
+
+                    if not detected_jeje_char or i == len(variants) - 1:
+                        word = replacement
+                        break
+
+                    variant: str = variants[i]
+
+                    # print(word, "-> ", variants, "- ", variant)
+                    # print("Current Word: ", word)
+                    # print("Current variant: ", variant)
+                    # print("Current variants lists: ", variants)
+            
+                    replacement = replace_variants(word = replacement, normal = normal, detected_variants = detected_jeje_char)
+
+                    # print("Replacement:", replacement)
+                    # print("Detected jejemon Characters:", detected_jeje_char)
+                    # print()
+                    i += 1
+                
+                    # common_substitute_match[normal] = best_match(word = word, choices = normal_words)
+
+    # print(common_substitute_match)
+    return word
+
+
+def normalization(sentence: str) -> str:
+    """  Checks possible patterns """
+    sentence = sentence.lower()
+
+    # * Remove long repeated letters
+    if remove_repeats:
+        # * Removes multiple Characters inside of the word like: boook -> book
+        sentence = re.sub(r'(.)\1{2,}', r'\1\1', sentence)
+        # * Removes multiple and double characters at the end of the word like: boookss -> books
+        sentence = re.sub(r'(.)\1$', r'\1', sentence)
+
+    sentence: str = normalize_characters(sentence)
+
+    # sentence = re.sub(rf"[{''.join(strip_trailing)}]+$", "", sentence)
+
+    return sentence
 
 
 def jejenized(jeje_sentence: str) -> None:
     """ Converts jejemon sentence into normal sentence """
-    tokenized = tokenization(jeje_sentence)
-    normalized = normalization(tokenized = tokenized)
+    normalized_characters: str = normalization(sentence = jeje_sentence)
+    tokenized: List[str] = tokenization(normalized_characters)
 
-    print("Original Tokens:", tokenized)
-    print("Normalized:", normalized)
+    correct_match: List[str] = [best_match(word = word, choices = normal_words) for word in tokenized]
+
+    print("Jejemon Sentence: ", jeje_sentence)
+    print("Character Normalization: ", normalized_characters)
+    print("Tokenized: ", tokenized)
+    print("Normalized:", " ".join(correct_match))
 
 
 if __name__ == "__main__":
     # jejenized(
-    #     jeje_sentence = "mUztAhh jejejeje"
+    #     jeje_sentence = "muztAhh"
     # )
 
     # print(normalize_characters("mUztAhh"))
-    word: str = "Helopo^^.\\/\\/ hahahahaha"
-    dictionary = ["He", "Lop", "o", "aba", "k", "^^", "\\/\\/","ha"]
+    setence1: str = "H1ndI p0 4kO nA9s45al1tA nA9t4typ3 p0 4kooo"
 
-    tokenized: List[str] = tokenize_jeje_letters(word = word, variants = dictionary)
-    print(tokenized)
-    
+    sentence2: str = "muuzt4hH"
+
+    jejenized(jeje_sentence = setence1)
+    # dictionary = ['z', 's', 'x', 'zz', "ah"]
+
+    # print(correct_match)
+
+    # tokenized: List[str] = tokenize_jeje_letters(word = word2, variants = dictionary)
+    # print(tokenized)
