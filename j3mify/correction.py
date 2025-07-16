@@ -55,28 +55,37 @@ def hybrid_score(a: str, b: str) -> float:
     return round((lev + jac) / 2, 2)
 
 
-def best_match(word: str, choices: List["str"], threshhold: float = 0.55) -> str:
+def best_match(word: str, choices: List["str"], threshold: float = 0.55) -> str:
     """ identifies whats the best match on the given word with the given list of choices with possible matches """
     if word in choices:
         return word
 
-    best_match = None
+    matches = None
     best_score = -1
 
     for option in choices:
         score = hybrid_score(word, option)
-        if score > best_score:
-            best_match = option
+        if score >= best_score:
+            # matches.append(option)
+            matches = option
             best_score = score
- 
-    return best_match if best_score >= threshhold else None
+
+    if best_score > threshold:
+        return matches
+
+    return word
 
 
 if __name__ == "__main__":  
     # ! DISCLAIMER: Nahanp kolang sa internet 💀👌✨
     word = "😜😛🥰Anong masarap na KAPE@ edi KAPEling ka samahan mopa ng DECAF DECAFapakawalan mamahalin kita i love my life because my life is you🤪😘😂🤣" 
 
-    print(tokenization(sentence = word))
+    matches = best_match(
+        word = "mwsta",
+        choices = ["musta"]
+    )
+
+    print(matches)
 
     """
     TODO: 
