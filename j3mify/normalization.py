@@ -14,8 +14,11 @@ normal_words: List[str] = load_txt_file(file_name="words.txt")
 
 
 def is_punctuation(char: str) -> bool:
-     pass
-
+     pattern_ending = r'[!?]+(?=\s|$)'
+     pattern_sandwich = r'(?<=\w)[!?](?=\w)'
+     pattern_emotional = r'[!?]{2,}'
+     
+     
 
 def replace_variants(word: str, normal: str, detected_variants: List[str]) -> str:
     for variant in detected_variants:
@@ -45,6 +48,8 @@ def normalize_characters(sentence: str, substitute: Literal["alphabets","emotico
                     detected_jeje_char = split_jejemon(word = replacement, variants = variants)
                     
                     variant: str = variants[i]
+                    #print(detected_jeje_char)
+                    #print(sentence)
                     replacement = replace_variants(word = replacement, normal = normal, detected_variants = detected_jeje_char)
                     
                     if not detected_jeje_char or i == len(variants) - 1:
@@ -60,7 +65,7 @@ def normalize_characters(sentence: str, substitute: Literal["alphabets","emotico
 def normalization(sentence: str) -> str:
     """  Checks possible patterns """
     sentence = sentence.lower()
-
+    print(sentence)
     # * Remove long repeated letters
     if remove_repeats:
         # * Removes multiple Characters inside of the word like: boook -> book
