@@ -8,9 +8,9 @@ def main():
 
     sentence3: str = "m4ta9al na 4kon9 j3j3mon 3h jajajajajajajaja"
     
-    sentence4: str = ":3"
+    sentence4: str = "kam###usta :3"
 
-    print(jeje.jejenized(sentence = sentence1))
+    print(jeje.jejenized(sentence = sentence4))
 
 if __name__ == "__main__":
     main()
