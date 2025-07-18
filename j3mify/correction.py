@@ -13,11 +13,10 @@ def split_jejemon(word: str, variants: List[str]) -> List[str]:
     # * Sort the list by length to Longest to shortest
     sorted_variants: List[str] = sorted(variants, key=len, reverse=True)
 
-    avoid_specials: List[str] = [
-        re.escape(word.lower()) for word in sorted_variants]
+    avoid_specials: List[str] = [re.escape(word.lower()) for word in sorted_variants]
 
     pattern: str = '|'.join(avoid_specials)
-
+    
     return re.findall(pattern, word.lower())
 
 
@@ -84,7 +83,7 @@ def best_match(word: str, choices: List["str"], threshold: float = 0.55) -> str:
             best_score = score
 
     if best_score > threshold:
-        return matches, best_score
+        return matches
 
     return word
 
