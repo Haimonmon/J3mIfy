@@ -1,6 +1,34 @@
 import re
-from typing import List
+from typing import List, Dict
 
+# * Allowed for sandwich ruling
+allowed_punctuations: List[str] = ["!","@","'"]
+
+def apply_sandwich_ruling(sentence: str, allowed: list, not_allowed: list) -> str:
+    def replacer(match):
+        punct = match.group(1)
+        if punct in allowed:
+            return punct  # * keep it
+        
+        if punct in not_allowed:
+            return ""  # * mark it for removal
+            
+    pattern = re.compile(r'(?<=\w)([^\w\s])(?=\w)')
+    return pattern.sub(replacer, sentence)
+
+
+def get_allowed_punctuations() -> None:
+      pass
+
+
+def remove_unnecessary_punctutation(sentence: str, substitutes: Dict[str, Dict[str, List[str]]]) -> str:
+     # * Real Punctuations
+     punctuations: List[str] = substitutes["punctuations"]
+      
+     sentence = apply_sandwich_ruling(sentence = sentence, allowed = allowed_punctuations, not_allowed = punctuations)
+     return sentence
+     
+     
 def detect_punctuation(sentence: str, punctuation_chars: List[str], detected_characters: List[str]) -> List[str]:
     char_positions = {char: [m.start() for m in re.finditer(re.escape(char), sentence)] for char in punctuation_chars}
 
@@ -35,9 +63,9 @@ def detect_punctuation(sentence: str, punctuation_chars: List[str], detected_cha
     return results
     
 if __name__ == "__main__":
-      sentence = "may ! H1llo! $!n!!? okok bruhh?"
+      sentence = "! have a $!n????? and mama and yah and do'g hahahahahahahaha!!!!"
       punctuation = ["?","!"]
-      detected_characters = ["@"]
+      detected_characters = ["!","!"]
       
       results = detect_punctuation(sentence, punctuation, detected_characters)
       
