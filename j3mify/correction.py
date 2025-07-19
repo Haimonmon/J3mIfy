@@ -4,7 +4,7 @@ from typing import List
 
 def tokenization(sentence: str) -> List[str]:
     """ Separates word by word and put it in an array"""
-    pattern = re.compile(r"\w+(?:-\w+)*|'[a-z]+|[^\w\s]", re.IGNORECASE)
+    pattern = re.compile(r"[a-zA-Z0-9']+|[.,!?;]", re.IGNORECASE)
     return pattern.findall(sentence)
 
 
