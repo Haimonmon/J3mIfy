@@ -76,28 +76,12 @@ def normalization(sentence: str) -> str:
     sentence = normalize_characters(sentence = sentence, substitute = "emoticons") 
     
     sentence = normalize_characters(sentence = sentence, substitute = "alphabets")
-
+    
     # sentence = re.sub(rf"[{''.join(strip_trailing)}]+$", "", sentence)
     return sentence
 
 
-def jejenized(sentence: str, mode: Literal["normal", "presentation", "debug"] = None) -> None:
-    """ Converts jejemon sentence into normal sentence """
-    normalized_characters: str = normalization(sentence = sentence)
-    tokenized: List[str] = tokenization(normalized_characters)
 
-    correct_match: List[str] = [best_match(word = word, choices = normal_words) for word in tokenized]
-    
-    normalized_sentence: str = " ".join(correct_match)
-    
-    if mode == "normal":
-          print("Jejemon Sentence: ", sentence)
-          # print("Character Normalization: ", normalized_characters)
-          # print("Tokenized: ", tokenized)
-          print("Normalized Sentence:", normalized_sentence)
-          return " "
-    
-    return normalized_sentence
           
 
 if __name__ == "__main__":

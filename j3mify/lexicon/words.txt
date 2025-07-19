@@ -32,7 +32,7 @@ ge
 gimik tayo
 girlfriend
 good morning
-good night
+goodnight
 gwapo
 ganda
 hehe
@@ -42,12 +42,12 @@ hindi
 hindi na
 i love you
 i miss
+iseen
 ikaw
 jejemon
 kaibigan
 kami
 kayo
-kinis
 ko
 kamusta
 kuya
@@ -66,23 +66,26 @@ mo
 mom
 muah
 na
+nga
 nagsasalita
 naman
 ngayon
 ninyo
 now na
+ouch
+off
 pasensya
 pasok
 pet
 po
 pogi
+please
 pretty
 profile
-sa
 sabi niya
 school
 siya
-sin
+seen
 sleep well
 snatch namin
 sobra
