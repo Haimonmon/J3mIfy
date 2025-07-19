@@ -6,13 +6,13 @@ def main():
 
     sentence2: str = "muuzt4hH gudnyt" # ! Still need a fixing on these to fix this sentence
 
-    sentence3: str = "m4ta9al na 4kon9 j3j3mon 3h jajajajajajajaja"
+    sentence3: str = "m4ta9al na 4kon9 j3j3mon 3h jaja!!!"
     
     sentence4: str = "kam###usta :3"
     
-    sentence5: str = "! have a $!n????? and m@ma and ya?h and do'g hahajajajajajaja!!!!"
+    sentence5: str = "! have a $!n????? and mama and yah and do'g jajahahahahahaha!!!!"
 
-    print(jeje.jejenized(sentence = sentence5))
+    print(jeje.jejenized(sentence = sentence3))
 
 if __name__ == "__main__":
     main()
