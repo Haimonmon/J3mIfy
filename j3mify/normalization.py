@@ -1,7 +1,7 @@
 from typing import Dict, List, Set, Literal
 
 from .file import load_file, load_txt_file
-from .punctuation import detect_punctuation
+from .punctuation import detect_punctuation, remove_unnecessary_punctutation
 from .correction import re, tokenization, split_jejemon,  best_match
 
 data: Dict = load_file(file_name="jejemon.json")
@@ -10,38 +10,24 @@ remove_repeats = data["fallback_rules"]["remove_repeated_letters"]
 substitutes: Dict[str, Dict[str, List[str]]] = load_file(file_name = "character.json")
 normal_words: List[str] = load_txt_file(file_name="words.txt")
 
-# * Allowed for sandwich ruling
-allowed_punctuations: List[str] = ["!","@","'"]
 
-def apply_sandwich_ruling(sentence: str, allowed: list, not_allowed: list) -> str:
-    def replacer(match):
-        punct = match.group(1)
-        if punct in allowed:
-            return punct  # * keep it
-        
-        if punct in not_allowed:
-            return ""  # * mark it for removal
-            
-    pattern = re.compile(r'(?<=\w)([^\w\s])(?=\w)')
-    return pattern.sub(replacer, sentence)
-
-
-def get_allowed_punctuations() -> None:
-      pass
-
-
-def remove_unnecessary_punctutation(sentence: str) -> str:
-     # * Real Punctuations
-     punctuations: List[str] = substitutes["punctuations"]
-      
-     sentence = apply_sandwich_ruling(sentence = sentence, allowed = allowed_punctuations, not_allowed = punctuations)
-     return sentence
-     
-     
 def replace_variants(sentence: str, normal: str, detected_variants: List[str]) -> str:
-    for variant in detected_variants:
+    # ? Temporary solution
+    punctuation_detector: List[str] = detect_punctuation(
+          sentence = sentence, 
+          punctuation_chars = substitutes["punctuations"], 
+          detected_characters = detected_variants
+    )
+    #print(sentence)
+    #print(normal)
+    #print(punctuation_detector)
+    #print()
+    for index, variant in enumerate(detected_variants):
         if variant in sentence:
-            sentence = sentence.replace(variant, normal, 1)
+            if punctuation_detector[index] == "not punctuation":
+                  sentence = sentence.replace(variant, normal, 1)
+            else:
+                  continue
     return sentence
 
 
@@ -79,7 +65,7 @@ def normalization(sentence: str) -> str:
     """  Checks possible patterns """
     sentence = sentence.lower()
     
-    sentence = remove_unnecessary_punctutation(sentence)
+    sentence = remove_unnecessary_punctutation(sentence, substitutes = substitutes)
     # * Remove long repeated letters
     if remove_repeats:
         # * Removes multiple Characters inside of the word like: boook -> book
@@ -98,11 +84,11 @@ def normalization(sentence: str) -> str:
 def jejenized(sentence: str, mode: Literal["normal", "presentation", "debug"] = None) -> None:
     """ Converts jejemon sentence into normal sentence """
     normalized_characters: str = normalization(sentence = sentence)
-    # tokenized: List[str] = tokenization(normalized_characters)
+    tokenized: List[str] = tokenization(normalized_characters)
 
-    # correct_match: List[str] = [best_match(word = word, choices = normal_words) for word in tokenized]
+    correct_match: List[str] = [best_match(word = word, choices = normal_words) for word in tokenized]
     
-    # normalized_sentence: str = " ".join(correct_match)
+    normalized_sentence: str = " ".join(correct_match)
     
     if mode == "normal":
           print("Jejemon Sentence: ", sentence)
@@ -111,7 +97,7 @@ def jejenized(sentence: str, mode: Literal["normal", "presentation", "debug"] = 
           print("Normalized Sentence:", normalized_sentence)
           return " "
     
-    return normalized_characters
+    return normalized_sentence
           
 
 if __name__ == "__main__":
