@@ -1,6 +1,6 @@
 from .correction import best_match
 from .file import load_file, save_file
-from .normalization import normalization, tokenization, normal_words
+from .normalization import normalization, tokenization, normal_words, List
 
 from typing import Literal
 

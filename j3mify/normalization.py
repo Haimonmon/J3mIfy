@@ -34,7 +34,7 @@ def replace_variants(sentence: str, normal: str, detected_variants: List[str]) -
 def normalize_characters(sentence: str, substitute: Literal["alphabets","emoticons"]) -> str:
     """ Change each character into normal ones """
     if not substitute or substitute not in ["alphabets","emoticons"]:
-    	return
+         return
     
     sentence = sentence.lower()
 
@@ -94,7 +94,7 @@ if __name__ == "__main__":
 
     sentence2: str = "muuzt4hH"
 
-    jejenized(jeje_sentence = setence1)
+    # jejenized(jeje_sentence = setence1)
     # dictionary = ['z', 's', 'x', 'zz', "ah"]
 
     # print(correct_match)
