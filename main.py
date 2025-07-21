@@ -2,14 +2,14 @@ import json
 import j3mify as jeje
 
 # * External Libraries for Terminal style customization 🌾✨
-from pyfiglet import Figlet
-
 from rich.text import Text
-from rich.live import Live
 from rich.panel import Panel
 from rich.console import Console
 
+from typing import Dict, List
+
 console = Console()
+
 
 def load_file(file_name: str) -> any:
     """ Loads data on the specified json file name. """
@@ -34,9 +34,7 @@ def generate_previous_chats(file_name: str, prompter_name: str, bot_name: str) -
             
             
 def generate_chat_head(role: str, response: str, prompter_name: str = "", bot_name: str = "") -> None:
-    """
-    Display single chat head for the given role.
-    """
+    """ Display single chat head for the given role. """
     chat_head_icons: Dict = {
         "saturn": f"👩 {prompter_name}",
         "zero": f"🧑 {bot_name}"
@@ -68,3 +66,14 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+    #* Jejemon Source: https://www.wattpad.com/429129025-my-miss-jejemon-1
+
+    """
+    TODO: Bugs Encounter
+
+    1. ending jejemon punctuation like @ and ! at the end of word can be possible normalized, like: origam! and tax! to origami and taxi
+    2. sandwich emoticon need to be remove , as it cuts off words like good (emoji) night
+    3. improve normalization
+    4.     
+    """
