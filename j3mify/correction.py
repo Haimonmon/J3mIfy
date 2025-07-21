@@ -2,9 +2,24 @@ import re
 from typing import List
 
 
+def emoticon_unicodes() -> set:
+    """ Gives emoticons Unicodes """
+    return (
+        "\U0001F600-\U0001F64F"  # emoticons
+        "\U0001F300-\U0001F5FF"  # symbols & pictographs
+        "\U0001F680-\U0001F6FF"  # transport & map
+        "\U0001F1E0-\U0001F1FF"  # flags
+        "\U00002700-\U000027BF"  # dingbats
+        "\U0001F900-\U0001F9FF"  # supplemental
+        "\U0001FA70-\U0001FAFF"  # emoji v13
+        "\U00002600-\U000026FF"  # misc symbols
+        "\U00002B00-\U00002BFF"  # arrows and more
+    )
+
+
 def tokenization(sentence: str) -> List[str]:
     """ Separates word by word and put it in an array"""
-    pattern = re.compile(r"[a-zA-Z0-9']+|[.,!?;]", re.IGNORECASE)
+    pattern = re.compile(fr"[a-zA-Z0-9']+|[{emoticon_unicodes()}]|[.,!?;]", re.UNICODE, )
     return pattern.findall(sentence)
 
 
@@ -61,14 +76,14 @@ def jaccard_similarity(a: str, b: str) -> float:
 
 
 def hybrid_score(a: str, b: str) -> float:
-    """ Both jaccard and levenshtein based distancing or scoring """
+    """ Both jaccard and levenshtein distancing """
     lev = fuzzy_matching(a, b)
     jac = jaccard_similarity(a, b)
     return round((lev + jac) / 2, 2)
 
 
 def best_match(word: str, choices: List["str"], threshold: float = 0.55) -> str:
-    """ identifies whats the best match on the given word with the given list of choices with possible matches """
+    """ identifies whats the best match on the given word with the given list of possible matches """
     if word in choices:
         return word
 
