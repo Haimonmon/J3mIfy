@@ -74,9 +74,12 @@ def normalization(sentence: str) -> str:
         sentence = re.sub(r'([^!?\.])\1$', r'\1', sentence)
         
     sentence = normalize_characters(sentence = sentence, substitute = "emoticons") 
+
+    #print(sentence)
     
     sentence = normalize_characters(sentence = sentence, substitute = "alphabets")
     
+    # print(sentence)
     # sentence = re.sub(rf"[{''.join(strip_trailing)}]+$", "", sentence)
     return sentence
 
