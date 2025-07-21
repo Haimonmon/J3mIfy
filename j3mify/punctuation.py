@@ -62,6 +62,7 @@ def detect_punctuation(sentence: str, punctuation_chars: List[str], detected_cha
 
     return results
     
+    
 if __name__ == "__main__":
       sentence = "! have a $!n????? and mama and yah and do'g hahahahahahahaha!!!!"
       punctuation = ["?","!"]
