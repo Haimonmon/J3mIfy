@@ -1,4 +1,5 @@
 ako
+are
 and
 akong
 alis na
@@ -14,14 +15,14 @@ bongga
 boyfriend
 busy
 bye
-chat mo ako
+chat
 city hall
 class
 cool
 corn
 cute
 dito
-eow
+din
 ever
 ex
 eh
@@ -29,19 +30,16 @@ forever
 friends
 ganda
 ge
-gimik tayo
+gimik 
 girlfriend
-good morning
-goodnight
+good
 gwapo
 ganda
 hehe
 hello
 here
 hindi
-hindi na
-i love you
-i miss
+i
 iseen
 ikaw
 jejemon
@@ -54,23 +52,29 @@ kuya
 lakad
 lang
 love
-love
-love you
+miss
 mainit
-mamaya
-matutulog ako
 maganda
+malalaman
+mamaya
+matutulog
 me
 mga
 mo
 mom
+morning
 muah
 na
 nga
 nagsasalita
+nakatulog
+nakakatawa
 naman
+namin
 ngayon
+niya
 ninyo
+night
 now na
 ouch
 pasensya
@@ -81,12 +85,13 @@ pogi
 please
 pretty
 profile
-sabi niya
+sabi
 school
 siya
+sino
 seen
-sleep well
-snatch namin
+sleep 
+snatch 
 sobra
 sobrang
 sosyal
@@ -98,8 +103,10 @@ thanks
 the
 use
 wait
+well
 weirdo
 what's up
-where are you
+where
+you
 your
 zero

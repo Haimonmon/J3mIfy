@@ -1,8 +1,9 @@
 from typing import Dict, List, Set, Literal
+import re
 
 from .file import load_file, load_txt_file
 from .punctuation import detect_punctuation, remove_unnecessary_punctutation
-from .correction import re, tokenization, split_jejemon,  best_match
+from .correction import tokenization, split_jejemon,  best_match
 
 data: Dict = load_file(file_name="jejemon.json")
 remove_repeats = data["fallback_rules"]["remove_repeated_letters"]
@@ -61,10 +62,48 @@ def normalize_characters(sentence: str, substitute: Literal["alphabets","emotico
     return sentence
 
 
+def number_repetition_replacer(match):
+    """
+    Used by expand_number_repetition to expand patterns like 'naka2tawa' to 'nakakatawa'.
+    """
+    before = match.group(1)
+    after = match.group(2)
+    return before + before + after
+
+def tu_to_replacer(match):
+    before = match.group(1)
+    after = match.group(2)
+    # If the next letters look like a verb ending, use "tu", else "to"
+    # You can refine this logic based on your word list
+    if after.startswith("log") or after.startswith("long"):
+        return before + "tu" + after
+    else:
+        return before + "to" + after
+
+def boundary_2_to_replacer(match):
+    # If 2 is a standalone token, replace with "to"
+    return "to"
+
+def expand_number_repetition(sentence: str) -> str:
+    """
+    Expands patterns like 'naka2tawa' to 'nakakatawa', 'natu2log' to 'natutulog',
+    and replaces standalone '2' with 'to'.
+    """
+    # Replace standalone '2' with 'to'
+    sentence = re.sub(r'\b2\b', boundary_2_to_replacer, sentence)
+    # Repeat previous syllable (nakakatawa, natutulog)
+    pattern_repeat = r'([a-zA-Z]{2})2([a-zA-Z]+)'
+    sentence = re.sub(pattern_repeat, number_repetition_replacer, sentence)
+    # Replace 2 with "tu" or "to" (nakatulog, patolong)
+    pattern_tu_to = r'([a-zA-Z]+)2([a-zA-Z]+)'
+    sentence = re.sub(pattern_tu_to, tu_to_replacer, sentence)
+    return sentence
+
 def normalization(sentence: str) -> str:
     """  Checks possible patterns """
     sentence = sentence.lower()
-    
+    sentence = expand_number_repetition(sentence)  # <-- Call the new function here
+
     sentence = remove_unnecessary_punctutation(sentence, substitutes = substitutes)
     # * Remove long repeated letters
     if remove_repeats:
@@ -87,20 +126,20 @@ def normalization(sentence: str) -> str:
 
           
 
-if __name__ == "__main__":
-    # jejenized(
-    #     jeje_sentence = "muztAhh"
-    # )
+# if __name__ == "__main__":
+#     # jejenized(
+#     #     jeje_sentence = "muztAhh"
+#     # )
 
-    # print(normalize_characters("mUztAhh"))
-    setence1: str = "H1ndI p0 4kO nA9s45al1tA nA9t4typ3 p0 4kooo"
+#     # print(normalize_characters("mUztAhh"))
+#     setence1: str = "H1ndI p0 4kO nA9s45al1tA nA9t4typ3 p0 4kooo"
 
-    sentence2: str = "muuzt4hH"
+#     sentence2: str = "muuzt4hH"
 
-    # jejenized(jeje_sentence = setence1)
-    # dictionary = ['z', 's', 'x', 'zz', "ah"]
+#     # jejenized(jeje_sentence = setence1)
+#     # dictionary = ['z', 's', 'x', 'zz', "ah"]
 
-    # print(correct_match)
+#     # print(correct_match)
 
-    # tokenized: List[str] = tokenize_jeje_letters(word = word2, variants = dictionary)
-    # print(tokenized)
+#     # tokenized: List[str] = tokenize_jeje_letters(word = word2, variants = dictionary)
+#     # print(tokenized)
