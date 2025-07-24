@@ -7,10 +7,10 @@ def jejenized(sentence: str, mode: Literal["normal", "presentation", "debug"] = 
     """ Converts jejemon sentence into normal sentence """
     # * NORMALIZING
     normalized_characters: str = normalization(sentence = sentence)
-    print(normalized_characters)
+    
     # * TOKENIZATION
     tokenized: List[str] = tokenization(normalized_characters)
-    print(tokenized)
+    
 
     # * FUZZY MATCH
     correct_match: List[str] = [best_match(word = word, choices = normal_words) for word in tokenized]
