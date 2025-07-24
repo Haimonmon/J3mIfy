@@ -75,5 +75,5 @@ if __name__ == "__main__":
     1. ending jejemon punctuation like @ and ! at the end of word can be possible normalized, like: origam! and tax! to origami and taxi
     2. sandwich emoticon need to be remove , as it cuts off words like good (emoji) night
     3. improve normalization
-    4.     
+    4. 22o should be output "totoo", apply this with numbers like 130130 ,is for B*BO ( Just Censored ) 
     """
