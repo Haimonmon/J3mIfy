@@ -123,23 +123,20 @@ def normalization(sentence: str) -> str:
     return sentence
 
 
+if __name__ == "__main__":
+    # jejenized(
+    #     jeje_sentence = "muztAhh"
+    # )
 
-          
+    # print(normalize_characters("mUztAhh"))
+    setence1: str = "H1ndI p0 4kO nA9s45al1tA nA9t4typ3 p0 4kooo"
 
-# if __name__ == "__main__":
-#     # jejenized(
-#     #     jeje_sentence = "muztAhh"
-#     # )
+    sentence2: str = "muuzt4hH"
 
-#     # print(normalize_characters("mUztAhh"))
-#     setence1: str = "H1ndI p0 4kO nA9s45al1tA nA9t4typ3 p0 4kooo"
+    # jejenized(jeje_sentence = setence1)
+    # dictionary = ['z', 's', 'x', 'zz', "ah"]
 
-#     sentence2: str = "muuzt4hH"
+    # print(correct_match)
 
-#     # jejenized(jeje_sentence = setence1)
-#     # dictionary = ['z', 's', 'x', 'zz', "ah"]
-
-#     # print(correct_match)
-
-#     # tokenized: List[str] = tokenize_jeje_letters(word = word2, variants = dictionary)
-#     # print(tokenized)
+    # tokenized: List[str] = tokenize_jeje_letters(word = word2, variants = dictionary)
+    # print(tokenized)
