@@ -69,35 +69,47 @@ def number_repetition_replacer(match):
     before = match.group(1)
     after = match.group(2)
     return before + before + after
+def two_replacer(match):
+    before = match.group(1) or ""
+    digits = match.group(2)
+    after = match.group(3) or ""
 
-def tu_to_replacer(match):
-    before = match.group(1)
-    after = match.group(2)
-    # If the next letters look like a verb ending, use "tu", else "to"
-    # You can refine this logic based on your word list
-    if after.startswith("log") or after.startswith("long"):
-        return before + "tu" + after
-    else:
-        return before + "to" + after
+    count_2s = digits.count("2")
+    candidates = []
 
-def boundary_2_to_replacer(match):
-    # If 2 is a standalone token, replace with "to"
-    return "to"
+    if count_2s == 1:
+        if before == "" and after:
+            candidates.extend(["tu" + after, "to" + after])
+        elif before and after:
+            candidates.extend([before + "tu" + after, before + "to" + after])
+        elif before and not after:
+            candidates.append(before + "to")
+        elif not before and not after:
+            candidates.append("to")
+    elif count_2s == 2:
+        if before and after:
+            candidates.append(before + "to" + after)
+        elif not before and after:
+            # This handles 22o → totoo
+            candidates.append("to" * 2 + after)
+
+    for candidate in candidates:
+        if candidate in normal_words:
+            return candidate
+
+    return candidates[0] if candidates else "to"
+
+
+
 
 def expand_number_repetition(sentence: str) -> str:
-    """
-    Expands patterns like 'naka2tawa' to 'nakakatawa', 'natu2log' to 'natutulog',
-    and replaces standalone '2' with 'to'.
-    """
-    # Replace standalone '2' with 'to'
-    sentence = re.sub(r'\b2\b', boundary_2_to_replacer, sentence)
     # Repeat previous syllable (nakakatawa, natutulog)
-    pattern_repeat = r'([a-zA-Z]{2})2([a-zA-Z]+)'
-    sentence = re.sub(pattern_repeat, number_repetition_replacer, sentence)
-    # Replace 2 with "tu" or "to" (nakatulog, patolong)
-    pattern_tu_to = r'([a-zA-Z]+)2([a-zA-Z]+)'
-    sentence = re.sub(pattern_tu_to, tu_to_replacer, sentence)
-    return sentence
+    sentence = re.sub(r'([a-zA-Z]{2})2([a-zA-Z]+)', number_repetition_replacer, sentence)
+
+    # Covers standalone, start, middle, and double 2
+    psentence = re.sub(r'\b([a-zA-Z]*?)(2{1,2})([a-zA-Z]*?)\b', two_replacer, sentence)
+
+    return psentence
 
 def normalization(sentence: str) -> str:
     """  Checks possible patterns """
