@@ -82,6 +82,7 @@ ouch
 pasensya
 pasok
 pet
+patulong
 po
 pogi
 please
@@ -100,9 +101,13 @@ sosyal
 tambay
 tayo
 text
-text ko
+text
 thanks
 the
+to
+totoo
+tulong
+tulog
 use
 wait
 well
