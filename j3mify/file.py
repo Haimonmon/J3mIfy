@@ -118,7 +118,7 @@ if __name__ == "__main__":
       ))
       
       # * Source: https://github.com/AustinZuniga/Filipino-wordlist/blob/master/Filipino-wordlist.txt
-      tagalog_source: str = "source/Filipino-wordlist.txt"
+      tagalog_source: str = "source/tagalog_dict.txt"
       tagalog_directory: str = f"{directory}/tagalog-dictionary"
 
       asyncio.run(organize_data(
