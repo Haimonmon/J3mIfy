@@ -8,6 +8,8 @@ from collections import defaultdict
 
 directory = r"j3mify/lexicon/"
 
+LIST_SIZE: int = 5000
+
 alphabet: List[str] = [
     "a", "b", "c", "d", "e",
     "f", "g", "h", "i", "j",
@@ -61,7 +63,14 @@ def group_words_by_letter(words: List[str]) -> Dict[str, List[str]]:
       """ Grouped the list of words by their designated Alphabet, creates a dictionary """
       grouped = defaultdict(list)
       for word in words:
-            if word and word[0].lower() in alphabet:
+            if not word:
+                  continue
+            
+            letter = word[0].lower()
+            if letter not in alphabet:
+                  continue
+            
+            if LIST_SIZE and len(grouped[letter]) < LIST_SIZE:
                   grouped[word[0].lower()].append(word)
       return grouped
 
