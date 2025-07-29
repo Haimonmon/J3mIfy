@@ -2,10 +2,27 @@ import re
 from typing import List
 
 
+def emoticon_unicodes() -> set:
+    """ Gives emoticons Unicodes """
+    return (
+        "\U0001F600-\U0001F64F"  # emoticons
+        "\U0001F300-\U0001F5FF"  # symbols & pictographs
+        "\U0001F680-\U0001F6FF"  # transport & map
+        "\U0001F1E0-\U0001F1FF"  # flags
+        "\U00002700-\U000027BF"  # dingbats
+        "\U0001F900-\U0001F9FF"  # supplemental
+        "\U0001FA70-\U0001FAFF"  # emoji v13
+        "\U00002600-\U000026FF"  # misc symbols
+        "\U00002B00-\U00002BFF"  # arrows and more
+    )
+
+
 def tokenization(sentence: str) -> List[str]:
     """ Separates word by word and put it in an array"""
-    pattern = re.compile(r"[a-zA-Z0-9']+|[.,!?;]", re.IGNORECASE)
+    pattern = re.compile(fr"[a-zA-Z0-9']+|[{emoticon_unicodes()}]|[.,!?;]", re.UNICODE, )
     return pattern.findall(sentence)
+
+
 
 
 def split_jejemon(word: str, variants: List[str]) -> List[str]:
