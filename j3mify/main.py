@@ -1,5 +1,5 @@
-from .correction import best_match
-from .normalization import normalization, tokenization, normal_words
+from .correction import correction, tokenization
+from .normalization import normalization, normal_words, substitutes
 
 from typing import Literal, List
 
@@ -7,12 +7,14 @@ def jejenized(sentence: str, mode: Literal["normal", "presentation", "debug"] = 
     """ Converts jejemon sentence into normal sentence """
     # * NORMALIZING
     normalized_characters: str = normalization(sentence = sentence)
+
     
     # * TOKENIZATION
     tokenized: List[str] = tokenization(normalized_characters)
 
+
     # * FUZZY MATCH
-    correct_match: List[str] = [best_match(word = word, choices = normal_words) for word in tokenized]
+    correct_match: List[str] = [correction(word, normal_words, substitutes["jejewords"]) for word in tokenized]
     
     normalized_sentence: str = " ".join(correct_match)
     
@@ -24,3 +26,4 @@ def jejenized(sentence: str, mode: Literal["normal", "presentation", "debug"] = 
           return " "
     
     return normalized_sentence
+
