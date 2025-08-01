@@ -14,16 +14,14 @@ normal_words: List[str] = load_txt_file(file_name="words.txt")
 
 
 def replace_variants(sentence: str, normal: str, detected_variants: List[str]) -> str:
+    """ replace jejemon characters """
     # ? Temporary solution
     punctuation_detector: List[str] = detect_punctuation(
           sentence = sentence, 
           punctuation_chars = substitutes["punctuations"], 
           detected_characters = detected_variants
     )
-    #print(sentence)
-    #print(normal)
-    #print(punctuation_detector)
-    #print()
+
     for index, variant in enumerate(detected_variants):
         if variant in sentence:
             if punctuation_detector[index] == "not punctuation":
@@ -63,7 +61,7 @@ def normalize_characters(sentence: str, substitute: Literal["alphabets","emotico
     return sentence
 
 
-def number_repetition_replacer(match):
+def number_repetition_replacer(match: str) -> str:
     """
     Used by expand_number_repetition to expand patterns like 'naka2tawa' to 'nakakatawa'.
     """
@@ -72,7 +70,7 @@ def number_repetition_replacer(match):
     return before + before + after
     
     
-def two_replacer(match):
+def two_replacer(match: str) -> str:
     before = match.group(1) or ""
     digits = match.group(2)
     after = match.group(3) or ""
@@ -120,6 +118,7 @@ def normalization(sentence: str) -> str:
     # sentence = expand_number_repetition(sentence)  # <-- Call the new function here
 
     sentence = remove_unnecessary_punctutation(sentence, substitutes = substitutes)
+
     # * Remove long repeated letters
     if remove_repeats:
         # * Removes multiple Characters inside of the word like: boook -> book
@@ -130,30 +129,15 @@ def normalization(sentence: str) -> str:
     # * normalize characters
     sentence = normalize_characters(sentence = sentence, substitute = "emoticons")
 
+
     sentence = normalize_characters(sentence = sentence, substitute = "alphabets")
 
-    # print(sentence)
-    # sentence = normalize_characters(sentence = sentence, substitute = "jejewords")
-   
-    # print(sentence)
-    # sentence = re.sub(rf"[{''.join(strip_trailing)}]+$", "", sentence)
+
     return sentence
 
 
 if __name__ == "__main__":
-    # jejenized(
-    #     jeje_sentence = "muztAhh"
-    # )
 
-    # print(normalize_characters("mUztAhh"))
     setence1: str = "H1 po, Z3R0!!, 4 uZtAh qAh n4 pfHo3? aQcKuHh 2h! lAbqCkyOuHhhhh!! 3owzzzzzzzzzzzzzzzzzzzzzz po"
 
     sentence2: str = "muuzt4hH"
-
-    # jejenized(jeje_sentence = setence1)
-    # dictionary = ['z', 's', 'x', 'zz', "ah"]
-
-    # print(correct_match)
-
-    # tokenized: List[str] = tokenize_jeje_letters(word = word2, variants = dictionary)
-    # print(tokenized)
