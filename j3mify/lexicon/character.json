@@ -10,7 +10,7 @@
         "h": ["h", "hh"],
         "i": ["1", "!", "|", "ii"],
         "j": ["j"],
-        "k": ["k", "q", "x"],
+        "k": ["k", "q"],
         "l": ["1", "l", "!", "|_"],
         "m": ["m", "mh", "^^"],
         "n": ["n", "ñ", "nh"],
@@ -18,7 +18,7 @@
         "p": ["p", "ph", "puh"],
         "q": ["q", "kw"],
         "r": ["r", "rr", "rh"],
-        "s": ["5", "$", "sh", "ss","z"],
+        "s": ["5", "$", "sh", "ss","z","6"],
         "t": ["+", "†"],
         "u": ["u", "ü"],
         "v": ["v", "\\/"],
@@ -62,16 +62,25 @@
         "💀": [":skull:", "dead"],
         "🫠": [":melting:"]
     },
-    "punctuations": ["!","?","@","'"],
+    "punctuations": ["!","?","@","'",",",".","-"],
     "jejewords":  {
         "ako": ["aQcKuHh", "aQ"],
         "hello": ["eowz", "eEoW"],
         "love": ["lab"],
         "night": ["nayt"],
-        "po": ["pfHoE", "phow", "pfoe","poehwz"],
+        "po": ["pfHoE", "phow", "pfoe","poehwz", "poeh"],
         "to": ["2h"],
         "you": ["yuHh", "qcKyuH", "qCkyOuHh"],
+        "you're": ["ur", "yor"],
         "for": ["4"],
-        "cityhall": ["7hol"]
+        "cityhall": ["7hol"],
+        "be": ["b"],
+        "do": ["d"],
+        "with": ["w/", "wid"]
+     },
+     "laugh": {
+        "ha": ["ja"],
+        "he": ["je"],
+        "hu": ["ju", "hue"]
      }
 }
