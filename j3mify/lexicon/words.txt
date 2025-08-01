@@ -29,6 +29,8 @@ cityhall
 class
 cool
 corn
+causes
+capital
 comprehend
 can
 cute
@@ -36,6 +38,7 @@ cuter
 dito
 din
 doing
+despite
 do
 ever
 ex
@@ -45,6 +48,8 @@ eh
 forever
 friends
 flambouyant
+filipinos
+filipino
 from
 ganda
 gimik 
@@ -52,7 +57,10 @@ girlfriend
 good
 go
 gwapo
+gamer
+gamers
 ganda
+ground
 he
 ha
 hi
@@ -83,6 +91,7 @@ lakad
 lang
 life
 looks
+laughter
 like
 look
 love
@@ -94,6 +103,7 @@ malalaman
 mamaya
 matutulog
 me
+mmorpg
 mean
 more
 makes
@@ -106,12 +116,15 @@ musta
 na
 now
 nga
+named
+name
 nagsasalita
 nakatulog
 nakakatawa
 naman
 namin
 ngayon
+number
 normal
 nigga
 niya
@@ -119,6 +132,8 @@ ninyo
 night
 ouch
 or
+opponent
+opponents
 pasensya
 pasok
 pet
@@ -131,6 +146,8 @@ pretty
 profile
 place
 right
+respect
+respectfully
 replaced
 sabi
 school
@@ -141,7 +158,9 @@ seen
 sense
 since
 same
+some
 sign
+say
 sentence
 sleep 
 snatch 
@@ -169,6 +188,7 @@ tulong
 time
 tulog
 use
+unique
 using
 very
 versions

@@ -68,7 +68,7 @@
         "hello": ["eowz", "eEoW"],
         "love": ["lab"],
         "night": ["nayt"],
-        "po": ["pfHoE", "phow", "pfoe","poehwz", "poeh"],
+        "po": ["pfHoE", "phow", "pfoe","poehwz", "poeh", "powz"],
         "to": ["2h"],
         "you": ["yuHh", "qcKyuH", "qCkyOuHh"],
         "you're": ["ur", "yor"],
@@ -76,7 +76,11 @@
         "cityhall": ["7hol"],
         "be": ["b"],
         "do": ["d"],
-        "with": ["w/", "wid"]
+        "with": ["w/", "wid"],
+        "happy": ["hpi", "hapi"],
+        "that": ["dat", "daht"],
+        "because": ["bec", "bcos"],
+        "was": ["wuz"]
      },
      "laugh": {
         "ha": ["ja"],
