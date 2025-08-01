@@ -1,5 +1,5 @@
 import re
-from typing import List
+from typing import List, Dict
 
 
 def emoticon_unicodes() -> set:
@@ -23,8 +23,6 @@ def tokenization(sentence: str) -> List[str]:
     return pattern.findall(sentence)
 
 
-
-
 def split_jejemon(word: str, variants: List[str]) -> List[str]:
     """ Splits every known jejemon alphabets """
     # * Sort the list by length to Longest to shortest
@@ -35,6 +33,33 @@ def split_jejemon(word: str, variants: List[str]) -> List[str]:
     pattern: str = '|'.join(avoid_specials)
     
     return re.findall(pattern, word.lower())
+
+
+def split_and_normalize_jejemon(word: str, choices: Dict[str, List[str]], threshold: float = 0.55) -> str:
+    """ Breaks down a jumbled jejemon word and normalizes known parts """
+    i = 0
+    normalized_parts = []
+
+    while i < len(word):
+        found = False
+        # * Try longest possible substrings first
+        for window in range(10, 2, -1): 
+            chunk = word[i:i+window]
+            if not chunk:
+                continue
+            normalized = best_jejemon_match(chunk, choices, threshold)
+            # * A change happened
+            if normalized != chunk:
+                normalized_parts.append(normalized)
+                i += window
+                found = True
+                break
+        if not found:
+            # * If no match, keep one character and move forward
+            normalized_parts.append(word[i])
+            i += 1
+
+    return "".join(normalized_parts)
 
 
 def levenshtein(keyword1: str, keyword2: str) -> int:
@@ -84,10 +109,10 @@ def hybrid_score(a: str, b: str) -> float:
     return round((lev + jac) / 2, 2)
 
 
-def best_match(word: str, choices: List["str"], threshold: float = 0.55) -> str:
+def best_normal_match(word: str, choices: List["str"], threshold: float = 0.55) -> str:
     """ identifies whats the best match on the given word with the given list of choices with possible matches """
     if word in choices:
-        return word
+        return word, 1
 
     matches = None
     best_score = -1
@@ -95,28 +120,86 @@ def best_match(word: str, choices: List["str"], threshold: float = 0.55) -> str:
     for option in choices:
         score = hybrid_score(word, option.lower())
         if score >= best_score:
-            # matches.append(option)
             matches = option
             best_score = score
             
-    #print(best_score, matches)
-    if best_score >= threshold:
-        return matches
+
+    if best_score > threshold:
+        return matches, best_score
+
+    return word, best_score
+
+
+def best_jejemon_match(word: str, choices: Dict[str, List[str]], threshold: float = 0.55) -> str:
+    """ corrects moderate jejemon wordings """
+    for normal, jejemon in choices.items():
+        matched, best_score = best_normal_match(word, jejemon)
+
+        if matched and best_score > threshold:
+            return normal
 
     return word
+
+
+def correction(word: str, normal_choices: List[str], jejemon_choices: Dict[str, List[str]], threshold: float = 0.55) -> str:
+    """ just combined `best_jejemon_match` and `best_normal_match` """
     
-
-if __name__ == "__main__":  
-    # ! DISCLAIMER: Nahanp kolang sa internet 💀👌✨
-    word = "😜😛🥰Anong masarap na KAPE@ edi KAPEling ka samahan mopa ng DECAF DECAFapakawalan mamahalin kita i love my life because my life is you🤪😘😂🤣" 
-
-    matches = best_match(
-        word = "aq",
-        choices = ["aQcKuHh", "aQ"]
+    word = best_normal_match(
+        word = word,
+        choices = normal_choices,
+        threshold = threshold
     )
 
-    print(matches)
+    if word[0] not in normal_choices:
+        word = split_and_normalize_jejemon(word = word[0], choices = jejemon_choices, threshold = threshold)
 
+        word = best_jejemon_match(
+            word,
+            choices=jejemon_choices,
+            threshold=threshold
+        )
+
+        return word
+    
+    return word[0]
+
+
+if __name__ == "__main__":
+    sentence1: str = "hi po, sero!!, ustah kah na pfoe? akckuh 2h! labkckyouh!! eos po"
+
+    tokenized =  ['hi', 'po', ',', 'sero', '!', '!', ',', 'ustah', 'kah', 'na', 'pfoe', '?', 'akckuh', '2h', '!', 'ilabkckyouh', '!', '!', 'eows', 'po', 'jejejejejejejejejje']
+    choices = {
+        "ako": ["aQcKuHh", "aQ"],
+        "hello": ["eowz", "eEoW"],
+        "love": ["lab"],
+        "night": ["nayt"],
+        "po": ["pfHoE", "phow", "pfoe", "poeh"],
+        "to": ["2h"],
+        "you": ["yuHh", "qcKyuH", "qCkyOuHh"],
+        "cityhall": ["7hol"]
+    }
+
+
+    # matches = best_jejemon_match(
+    #     word="labkckyouh",
+    #     choices=choices
+    # )
+
+    # print(matches)
+
+    # matches = split_and_normalize_jejemon(
+    #     word = "labkckyouh",
+    #     choices = choices
+    # )
+
+    # print(matches)
+
+    # matches = best_normal_match(
+    #     word="p",
+    #     choices=["pa","how"]
+    # )
+
+    # print(matches)
     """
     TODO: 
     * 1. Improve tokenization about identifying special characters within word or sentence
