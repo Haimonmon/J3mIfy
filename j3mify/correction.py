@@ -19,8 +19,31 @@ def emoticon_unicodes() -> set:
 
 def tokenization(sentence: str) -> List[str]:
     """ Separates word by word and put it in an array"""
-    pattern = re.compile(fr"[a-zA-Z0-9']+|[{emoticon_unicodes()}]|[.,!?;]", re.UNICODE, )
+    pattern = re.compile(fr"[a-zA-Z0-9']+|[{emoticon_unicodes()}]|[.,!?;\"()]", re.UNICODE, )
     return pattern.findall(sentence)
+
+
+def join_punctuation(tokens: List[str], allowed_puncts: Dict[str, List[str]]) -> List[str]:
+    """ Joins the tokenized puntuations """
+    result = []
+    i = 0
+
+    while i < len(tokens):
+        token = tokens[i]
+
+        # If it's a word and next is punctuation
+        if i + 1 < len(tokens) and tokens[i + 1] in allowed_puncts["punctuations"]:
+            combined = token
+            while i + 1 < len(tokens) and tokens[i + 1] in allowed_puncts["punctuations"]:
+                combined += tokens[i + 1]
+                i += 1
+            result.append(combined)
+        else:
+            result.append(token)
+
+        i += 1
+
+    return result
 
 
 def split_jejemon(word: str, variants: List[str]) -> List[str]:
@@ -130,6 +153,36 @@ def best_normal_match(word: str, choices: List["str"], threshold: float = 0.55) 
     return word, best_score
 
 
+def extract_laughs(word: str, choices: Dict[str, List[str]]) -> str:
+    """ extracts only valid repeated laugh characters from a word"""
+    # * reverse mapping
+    all_variants = [v for lst in choices.values() for v in lst]
+    all_variants.sort(key=lambda s: -len(s))
+
+    pattern = '|'.join(re.escape(v) for v in all_variants)
+    repeated_pattern = rf'((?:{pattern}){{2,}})'
+
+    matches = re.finditer(repeated_pattern, word)
+
+    extracted = []
+    for match in matches:
+        sequence = match.group(0)
+
+        for variant in all_variants:
+            count = len(re.findall(re.escape(variant), sequence))
+            extracted.extend([variant] * count)
+
+    normalized_laugh = []
+    for char in extracted:
+        for replacement, jejemon in choices.items():
+            if char in jejemon:
+                normalized_laugh.append(replacement)
+    
+    if not normalized_laugh:
+        return word
+    return "".join(normalized_laugh)
+
+
 def best_jejemon_match(word: str, choices: Dict[str, List[str]], threshold: float = 0.55) -> str:
     """ corrects moderate jejemon wordings """
     for normal, jejemon in choices.items():
@@ -141,7 +194,7 @@ def best_jejemon_match(word: str, choices: Dict[str, List[str]], threshold: floa
     return word
 
 
-def correction(word: str, normal_choices: List[str], jejemon_choices: Dict[str, List[str]], threshold: float = 0.55) -> str:
+def correction(word: str, normal_choices: List[str], replacement_choices: Dict[str, List[str]], threshold: float = 0.55) -> str:
     """ just combined `best_jejemon_match` and `best_normal_match` """
     
     word = best_normal_match(
@@ -151,14 +204,20 @@ def correction(word: str, normal_choices: List[str], jejemon_choices: Dict[str, 
     )
 
     if word[0] not in normal_choices:
-        word = split_and_normalize_jejemon(word = word[0], choices = jejemon_choices, threshold = threshold)
+        word = split_and_normalize_jejemon(word = word[0], choices = replacement_choices["jejewords"], threshold = threshold)
 
         word = best_jejemon_match(
-            word,
-            choices=jejemon_choices,
-            threshold=threshold
+            word = word,
+            choices = replacement_choices["jejewords"],
+            threshold = threshold
         )
 
+        if (word not in normal_choices) and (word not in replacement_choices["punctuations"]):
+            word = extract_laughs(
+                word = word,
+                choices = replacement_choices["laugh"]
+            )
+        
         return word
     
     return word[0]
@@ -179,9 +238,12 @@ if __name__ == "__main__":
         "cityhall": ["7hol"]
     }
 
+    # token = tokenization(sentence = "like \"3owz\" its not a part of any!! ")
+    # print(token)
+
 
     # matches = best_jejemon_match(
-    #     word="labkckyouh",
+    #     word="pohw",
     #     choices=choices
     # )
 
@@ -194,12 +256,12 @@ if __name__ == "__main__":
 
     # print(matches)
 
-    # matches = best_normal_match(
-    #     word="p",
-    #     choices=["pa","how"]
-    # )
+    matches = best_normal_match(
+        word="and",
+        choices=["end","and"]
+    )
 
-    # print(matches)
+    print(matches)
     """
     TODO: 
     * 1. Improve tokenization about identifying special characters within word or sentence
