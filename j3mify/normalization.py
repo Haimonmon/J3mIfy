@@ -125,6 +125,7 @@ def normalization(sentence: str) -> str:
         # * Removes multiple and double characters at the end of the word like: boookss -> books
         sentence = re.sub(r'([^!?\.])\1$', r'\1', sentence)
         
+    # * normalize characters
     sentence = normalize_characters(sentence = sentence, substitute = "emoticons") 
     
     sentence = normalize_characters(sentence = sentence, substitute = "alphabets")
