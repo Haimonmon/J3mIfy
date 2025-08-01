@@ -68,9 +68,20 @@ def main():
     )
 
 if __name__ == "__main__":
-    main()
+    # main()
 
-    #* Jejemon Source: https://www.wattpad.com/429129025-my-miss-jejemon-1
+    # * Thanks to the alpha's
+    # * Jejemon Source: http://www.reyjr.com/2010/05/i-can-jejemon-write-lolz-jejejeje.html?m=1
+
+    sentence1: str = "H1 po, Z3R0!!, uZt4h qAh n4 pfHo3? aQcKuHh 2h! lAbqCkyOuHhhhhhhhhhhh!! ei0w p03Hwz jejejejejejejejejjje"
+
+    sentence2: str = "7hol P Aq!"
+    normalized: str = jeje.jejenized(
+        sentence = sentence2,
+        mode = None
+    )
+
+    print(normalized)
 
     """
     TODO: Bugs Encounter
@@ -79,6 +90,6 @@ if __name__ == "__main__":
     2. sandwich emoticon need to be remove , as it cuts off words like good (emoji) night
     3. improve normalization
     ! 4. 22o should be output "totoo", apply this with numbers like 130130 ,is for B*BO ( Just Censored ) [HARDCODED]
-    ! 5, 3owz need to be convert to hello , especially on hard jejemon [HARDCODED]
+    * 5, 3owz need to be convert to hello , especially on hard jejemon [HARDCODED]
     6. 4 can be "for" and "A" Needs to be fixed
     """
