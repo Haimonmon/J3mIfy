@@ -70,26 +70,24 @@ def main():
 if __name__ == "__main__":
     # main()
 
-    # * Thanks to the alpha's
+    # * Thanks to the alpha's and the source
     # * Jejemon Source: http://www.reyjr.com/2010/05/i-can-jejemon-write-lolz-jejejeje.html?m=1
 
-    sentence1: str = "H1 po, Z3R0!!, uZt4h qAh n4 pfHo3? aQcKuHh 2h! lAbqCkyOuHhhhhhhhhhhh!! ei0w p03Hwz jejejejejejejejejjje"
+    sentences: List[str] = [
+        "L3t's g0 n0w 2h symb0ls! Try usin9 \"+\" in pl4c3 of \"t\" sinc3 i+ lo0ks th3 s4me anyw4y. R3pl4cing \"i\" wi+h \"!\" is jus+ w0nd3rfully art!st!c 4nd !ngen!0us, d0n't y0u 4gr33? By th3 w4y, an \"a\" c4n als0 be r3pl@c3d with an \"@\" symb0l, d3p3nd!ng 0n h0w difficult it will bec0me 2h c0mpr3hend. I m3@n, d0n'+ us3 \"@\" wh3n y0u're wr!tin9 an 3ma!l @dd3ss!",
+        "So I started with the obvious ones, exchange letters for numbers - \"a\" can be \"4\", like with a sl4nted psychedelic look to it. Exchange \"e\" with \"3\", but not 4ll the tim3. You c4n still us3 the normal \"e\", sometim3s. 3xh4nge y0ur capital \"G\" with \"6\" and sm4ll \"g\" with \"9\" - it m4k3s s3nse ri9ht? You can use \"2\" in pl4ce of \"to\" or \4\" inste4d 0f \"for\" 4nytim3 y0u f33l like y0u n33d 2h do it... 4nd finally, us3 th3 numb3r \"0\" instead of the letter \"o\", just b3caus3 it's cut3r th4t w4y. Co0l! 63ttin9 th3 h4n9 0f it n0w?",
+        "L@sTly, jej3m0nz aRe,, kN0wN 2h b v3rY~ k!nD 4nD r3speCtfUl, d3sp!te tHe!r wRiTin9 stYl3. It iz n0t uNuSuAl 4 j3jemonz 2h eNd aNy sent3nz wi+H \"po\" - a s!gn of~ r3spEct 4 Filipinos. TH3r ar sveral vRsi0ns- frm d s!mpl3 \"poh\" 2h d mor iNteRestn9 \"poewh\" 2h d fLaMboUyant~ \"phoewhzz\" - tAk3 ur piCk pohwzz!!!!~~~ jejeje!"
+    ]
 
-    sentence2: str = "7hol P Aq!"
-    normalized: str = jeje.jejenized(
-        sentence = sentence2,
-        mode = None
-    )
+    for sentence in sentences:
+        normalized: str = jeje.jejenized(
+            sentence = sentence
+        )
 
-    print(normalized)
+        print()
+        print(normalized)
 
-    """
-    TODO: Bugs Encounter
+   
 
-    1. ending jejemon punctuation like @ and ! at the end of word can be possible normalized, like: origam! and tax! to origami and taxi
-    2. sandwich emoticon need to be remove , as it cuts off words like good (emoji) night
-    3. improve normalization
-    ! 4. 22o should be output "totoo", apply this with numbers like 130130 ,is for B*BO ( Just Censored ) [HARDCODED]
-    * 5, 3owz need to be convert to hello , especially on hard jejemon [HARDCODED]
-    6. 4 can be "for" and "A" Needs to be fixed
-    """
+
+  
