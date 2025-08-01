@@ -1,15 +1,16 @@
-from typing import Dict, List, Set, Literal
+from typing import Dict, List, Literal
 import re
 
 from .file import load_file, load_txt_file
 from .punctuation import detect_punctuation, remove_unnecessary_punctutation
-from .correction import tokenization, split_jejemon,  best_match
+from .correction import split_jejemon
 
-data: Dict = load_file(file_name="jejemon.json")
+data: Dict = load_file(file_name = "jejemon.json")
 remove_repeats = data["fallback_rules"]["remove_repeated_letters"]
 
 substitutes: Dict[str, Dict[str, List[str]]] = load_file(file_name = "character.json")
 normal_words: List[str] = load_txt_file(file_name="words.txt")
+
 
 
 def replace_variants(sentence: str, normal: str, detected_variants: List[str]) -> str:
@@ -115,7 +116,8 @@ def expand_number_repetition(sentence: str) -> str:
 def normalization(sentence: str) -> str:
     """  Checks possible patterns """
     sentence = sentence.lower()
-    sentence = expand_number_repetition(sentence)  # <-- Call the new function here
+
+    # sentence = expand_number_repetition(sentence)  # <-- Call the new function here
 
     sentence = remove_unnecessary_punctutation(sentence, substitutes = substitutes)
     # * Remove long repeated letters
@@ -124,14 +126,14 @@ def normalization(sentence: str) -> str:
         sentence = re.sub(r'([^!?\.])\1{2,}', r'\1\1', sentence)
         # * Removes multiple and double characters at the end of the word like: boookss -> books
         sentence = re.sub(r'([^!?\.])\1$', r'\1', sentence)
-        
+
     # * normalize characters
-    sentence = normalize_characters(sentence = sentence, substitute = "emoticons") 
-    
+    sentence = normalize_characters(sentence = sentence, substitute = "emoticons")
+
     sentence = normalize_characters(sentence = sentence, substitute = "alphabets")
-    
-    sentence = normalize_characters(sentence = sentence, substitute = "jejewords")
-    print(sentence)
+
+    # print(sentence)
+    # sentence = normalize_characters(sentence = sentence, substitute = "jejewords")
    
     # print(sentence)
     # sentence = re.sub(rf"[{''.join(strip_trailing)}]+$", "", sentence)
@@ -144,7 +146,7 @@ if __name__ == "__main__":
     # )
 
     # print(normalize_characters("mUztAhh"))
-    setence1: str = "H1ndI p0 4kO nA9s45al1tA nA9t4typ3 p0 4kooo"
+    setence1: str = "H1 po, Z3R0!!, 4 uZtAh qAh n4 pfHo3? aQcKuHh 2h! lAbqCkyOuHhhhh!! 3owzzzzzzzzzzzzzzzzzzzzzz po"
 
     sentence2: str = "muuzt4hH"
 
