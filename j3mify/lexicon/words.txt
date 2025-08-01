@@ -48,6 +48,7 @@ kaibigan
 kami
 kayo
 ko
+ka
 kamusta
 kuya
 lakad
@@ -66,6 +67,7 @@ mo
 mom
 morning
 muah
+musta
 na
 nga
 nagsasalita

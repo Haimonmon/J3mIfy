@@ -93,13 +93,14 @@ def best_match(word: str, choices: List["str"], threshold: float = 0.55) -> str:
     best_score = -1
 
     for option in choices:
-        score = hybrid_score(word, option)
+        score = hybrid_score(word, option.lower())
         if score >= best_score:
             # matches.append(option)
             matches = option
             best_score = score
-
-    if best_score > threshold:
+            
+    print(best_score, matches)
+    if best_score >= threshold:
         return matches
 
     return word
@@ -110,8 +111,8 @@ if __name__ == "__main__":
     word = "😜😛🥰Anong masarap na KAPE@ edi KAPEling ka samahan mopa ng DECAF DECAFapakawalan mamahalin kita i love my life because my life is you🤪😘😂🤣" 
 
     matches = best_match(
-        word = "misyu",
-        choices = ["miss you"]
+        word = "aq",
+        choices = ["aQcKuHh", "aQ"]
     )
 
     print(matches)

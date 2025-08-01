@@ -41,7 +41,10 @@ def generate_chat_head(role: str, response: str, prompter_name: str = "", bot_na
     }
     
     if role == "saturn":
-          response = jeje.jejenized(response)
+          response = jeje.jejenized(
+                sentence = response,
+                mode = "debug"
+                )
           
     chat_head_response: str = f"\n {response} \n"
 

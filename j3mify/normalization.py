@@ -32,9 +32,9 @@ def replace_variants(sentence: str, normal: str, detected_variants: List[str]) -
     return sentence
 
 
-def normalize_characters(sentence: str, substitute: Literal["alphabets","emoticons"]) -> str:
+def normalize_characters(sentence: str, substitute: Literal["alphabets","emoticons","jejewords"]) -> str:
     """ Change each character into normal ones """
-    if not substitute or substitute not in ["alphabets","emoticons"]:
+    if not substitute or substitute not in ["alphabets","emoticons","jejewords"]:
          return
     
     sentence = sentence.lower()
@@ -69,6 +69,8 @@ def number_repetition_replacer(match):
     before = match.group(1)
     after = match.group(2)
     return before + before + after
+    
+    
 def two_replacer(match):
     before = match.group(1) or ""
     digits = match.group(2)
@@ -100,8 +102,6 @@ def two_replacer(match):
     return candidates[0] if candidates else "to"
 
 
-
-
 def expand_number_repetition(sentence: str) -> str:
     # Repeat previous syllable (nakakatawa, natutulog)
     sentence = re.sub(r'([a-zA-Z]{2})2([a-zA-Z]+)', number_repetition_replacer, sentence)
@@ -110,6 +110,7 @@ def expand_number_repetition(sentence: str) -> str:
     psentence = re.sub(r'\b([a-zA-Z]*?)(2{1,2})([a-zA-Z]*?)\b', two_replacer, sentence)
 
     return psentence
+
 
 def normalization(sentence: str) -> str:
     """  Checks possible patterns """
@@ -125,11 +126,12 @@ def normalization(sentence: str) -> str:
         sentence = re.sub(r'([^!?\.])\1$', r'\1', sentence)
         
     sentence = normalize_characters(sentence = sentence, substitute = "emoticons") 
-
-    #print(sentence)
     
     sentence = normalize_characters(sentence = sentence, substitute = "alphabets")
     
+    sentence = normalize_characters(sentence = sentence, substitute = "jejewords")
+    print(sentence)
+   
     # print(sentence)
     # sentence = re.sub(rf"[{''.join(strip_trailing)}]+$", "", sentence)
     return sentence

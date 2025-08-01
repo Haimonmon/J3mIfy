@@ -3,7 +3,7 @@ from .normalization import normalization, tokenization, normal_words
 
 from typing import Literal, List
 
-def jejenized(sentence: str, mode: Literal["normal", "presentation", "debug"] = "debug") -> None:
+def jejenized(sentence: str, mode: Literal["normal", "presentation", "debug"] = None) -> None:
     """ Converts jejemon sentence into normal sentence """
     # * NORMALIZING
     normalized_characters: str = normalization(sentence = sentence)
