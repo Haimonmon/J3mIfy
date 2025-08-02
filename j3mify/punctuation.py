@@ -2,7 +2,7 @@ import re
 from typing import List, Dict
 
 # * Allowed for sandwich ruling
-allowed_punctuations: List[str] = ["!","@","'"]
+allowed_punctuations: List[str] = ["!","'"]
 
 def apply_sandwich_ruling(sentence: str, allowed: list, not_allowed: list) -> str:
     def replacer(match):
