@@ -1,10 +1,13 @@
 from .correction import correction, join_punctuation, tokenization
 from .normalization import normalization, normal_words, substitutes
 
-from typing import Literal, List
+from typing import Literal, List, Dict, Any
 
-def jejenized(sentence: str, mode: Literal["normal", "presentation", "debug"] = None) -> None:
+def j3j3niZ3d(sentence: str, mode: Literal["presentation", "debug"] = None) -> Dict[str, str] | str:
     """ Converts jejemon sentence into normal sentence """
+    if not sentence:
+         return 
+    
     # * NORMALIZING
     normalized_characters: str = normalization(sentence)
 
@@ -18,11 +21,18 @@ def jejenized(sentence: str, mode: Literal["normal", "presentation", "debug"] = 
     normalized_sentence: str = " ".join(correct_match)
     
     if mode == "debug":
-          print("Jejemon Sentence: ", sentence)
-          print("Character Normalization: ", normalized_characters)
-          print("Tokenized: ", tokenized)
-          print("Normalized Sentence:", normalized_sentence)
-          return " "
+          return {
+               "original_sentence": sentence,
+               "character_normalization": normalized_characters,
+               "tokenization": tokenized,
+               "normalized_sentence": normalized_sentence
+          }
+    if mode == "presentation":
+         return {
+              "original_sentence": sentence,
+              "normalized_sentence": normalized_sentence
+         }
+
     
     return normalized_sentence
 
