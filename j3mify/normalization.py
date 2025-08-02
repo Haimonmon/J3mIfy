@@ -115,7 +115,7 @@ def normalization(sentence: str) -> str:
     """  Checks possible patterns """
     sentence = sentence.lower()
 
-    # sentence = expand_number_repetition(sentence)  # <-- Call the new function here
+    sentence = expand_number_repetition(sentence)  # <-- Call the new function here
 
     sentence = remove_unnecessary_punctutation(sentence, substitutes = substitutes)
 
@@ -129,10 +129,8 @@ def normalization(sentence: str) -> str:
     # * normalize characters
     sentence = normalize_characters(sentence = sentence, substitute = "emoticons")
 
-
     sentence = normalize_characters(sentence = sentence, substitute = "alphabets")
-
-
+   
     return sentence
 
 
