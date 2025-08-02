@@ -4,6 +4,7 @@ import j3mify as jeje
 # * External Libraries for Terminal style customization 🌾✨
 from rich import box
 from rich.panel import Panel
+from rich.prompt import Prompt
 from rich.layout import Layout
 from rich.console import Console
 from rich.columns import Columns
@@ -89,20 +90,48 @@ def choose(sentence: List[str] | str, mode: Literal["presentation", "debug"] = N
     display_normal_mode(sentence)
 
 
-def display_j3j3m0Nizer(sentence: List[str] | str, mode: Literal["presentation", "debug"] = None) -> None:
-    """ User interface of the j3mify """
-    if mode and mode not in ["presentation", "debug"]:
-        print("[ 🍒 ]: Invalid Mode Choice.")
-        return 
-
+def validation(sentence: List[str] | str, mode: Literal["presentation", "debug"] = None) -> None:
+    """ For checking of parameters """
     if isinstance(sentence, list):
         for data in sentence:
-            choose(data, mode = mode)
+            choose(data, mode=mode)
         return
-    
+
     if isinstance(sentence, str):
         choose(sentence, mode = mode)
         return
 
     choose(sentence = sentence)
+
+
+def display_j3j3m0Nizer(sentence: List[str] | str, mode: Literal["presentation", "debug"] = None, input: bool = False) -> None:
+    """ User interface of the j3mify """
+    if mode and mode not in ["presentation", "debug"]:
+        print("[ 🍒 ]: Invalid Mode Choice.")
+        return
+    
+    while input:
+        sentence = Prompt.ask("[😎]: ")
+
+        if sentence == "quit":
+            break
+
+        if sentence == "--debug":
+            mode = "debug"
+            print("[🐞] Debug Mode Activated ")
+            continue
+
+        if sentence == "--presentation":
+            mode = "presentation"
+            print("[💖] Presentation Mode Activated ")
+            continue
+
+        if sentence == "--normal":
+            mode = None
+            print("[🌾] Normal Mode Activated ")
+            continue
+
+        validation(sentence, mode)
+    else:
+        validation(sentence, mode)
       

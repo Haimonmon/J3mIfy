@@ -15,7 +15,7 @@ def main() -> None:
     example_list1: List[str] = load_file("./example/example_data1.json")
     example_list2: List[str] = load_file("./example/example_data2.json")
     
-    display_j3j3m0Nizer(sentence = example_list1, mode = "debug")
+    display_j3j3m0Nizer(sentence = example_list1, mode = "presentation", input = False)
 
 
 if __name__ == "__main__":
