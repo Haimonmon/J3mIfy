@@ -17,6 +17,7 @@ baby
 bahay
 bait
 banger
+bruh
 bangis
 bongga
 boyfriend
@@ -62,7 +63,6 @@ gamers
 ganda
 ground
 he
-ha
 hi
 hello
 here
@@ -144,6 +144,7 @@ pogi
 please
 pretty
 profile
+purpose
 place
 right
 respect
@@ -189,6 +190,7 @@ time
 tulog
 use
 unique
+unusual
 using
 very
 versions

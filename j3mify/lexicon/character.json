@@ -1,6 +1,6 @@
 {
     "alphabets": {
-        "a": ["4", "@"],
+        "a": ["4", "@", "ấ"],
         "b": ["ß", "buh", "13"],
         "c": ["(", "<"],
         "d": ["d", "dh"],
@@ -62,14 +62,14 @@
         "💀": [":skull:", "dead"],
         "🫠": [":melting:"]
     },
-    "punctuations": ["!","?","@","'",",",".","-"],
+    "punctuations": ["!","?","'",",",".","-"],
     "jejewords":  {
         "ako": ["aQcKuHh", "aQ"],
         "hello": ["eowz", "eEoW"],
         "love": ["lab"],
         "night": ["nayt"],
         "po": ["pfHoE", "phow", "pfoe","poehwz", "poeh", "powz"],
-        "to": ["2h"],
+        "to": ["2h", "2"],
         "you": ["yuHh", "qcKyuH", "qCkyOuHh"],
         "you're": ["ur", "yor"],
         "for": ["4"],
