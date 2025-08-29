@@ -224,44 +224,7 @@ def correction(word: str, normal_choices: List[str], replacement_choices: Dict[s
 
 
 if __name__ == "__main__":
-    sentence1: str = "hi po, sero!!, ustah kah na pfoe? akckuh 2h! labkckyouh!! eos po"
 
-    tokenized =  ['hi', 'po', ',', 'sero', '!', '!', ',', 'ustah', 'kah', 'na', 'pfoe', '?', 'akckuh', '2h', '!', 'ilabkckyouh', '!', '!', 'eows', 'po', 'jejejejejejejejejje']
-    choices = {
-        "ako": ["aQcKuHh", "aQ"],
-        "hello": ["eowz", "eEoW"],
-        "love": ["lab"],
-        "night": ["nayt"],
-        "po": ["pfHoE", "phow", "pfoe", "poeh"],
-        "to": ["2h"],
-        "you": ["yuHh", "qcKyuH", "qCkyOuHh"],
-        "cityhall": ["7hol"]
-    }
-
-    # token = tokenization(sentence = "like \"3owz\" its not a part of any!! ")
-    # print(token)
-
-
-    # matches = best_jejemon_match(
-    #     word="pohw",
-    #     choices=choices
-    # )
-
-    # print(matches)
-
-    # matches = split_and_normalize_jejemon(
-    #     word = "labkckyouh",
-    #     choices = choices
-    # )
-
-    # print(matches)
-
-    matches = best_normal_match(
-        word="and",
-        choices=["end","and"]
-    )
-
-    print(matches)
     """
     TODO: 
     * 1. Improve tokenization about identifying special characters within word or sentence

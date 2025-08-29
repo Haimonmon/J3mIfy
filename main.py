@@ -15,11 +15,11 @@ def main() -> None:
     example_list1: List[str] = load_file("./example/example_data1.json")
     example_list2: List[str] = load_file("./example/example_data2.json")
     
-    display_j3j3m0Nizer(sentence = example_list1, mode = "presentation", input = False)
+    display_j3j3m0Nizer(sentence = example_list1, mode = "debug", input = False)
 
 
 if __name__ == "__main__":
     main()
 
-    # * Thanks to the n#ggs and the source
+    # * Thanks to the homies and the source
     # * Jejemon Source: http://www.reyjr.com/2010/05/i-can-jejemon-write-lolz-jejejeje.html?m=1

@@ -67,9 +67,9 @@ def display_normal_mode(normalized_sentence: str) -> None:
     console.print("\n\n\n")
 
 
-def choose(sentence: List[str] | str, mode: Literal["presentation", "debug"] = None) -> None:
+def choose(sentence: str, mode: Literal["presentation", "debug"] = None) -> None:
     """ Wala nakong maisip na function description lmao """
-    reply: Dict[str, str] | str = jeje.j3j3niZ3d(sentence, mode)
+    reply: Dict[str, str] | str = jeje.j3j3niZ3d(sentence)
 
     if mode == "debug":
         display_debug_mode(
